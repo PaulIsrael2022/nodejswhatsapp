@@ -1,0 +1,23 @@
+{
+  "name": "telepharma-botswana-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "A WhatsApp bot for Telepharma Botswana",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "form-data": "^4.0.0",
+    "mongoose": "^6.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
