@@ -379,6 +379,11 @@ app.get('/webhook', (req, res) => {
   }
 });
 
+// Handle root route
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
