@@ -142,7 +142,7 @@ app.post('/webhook', async (req, res) => {
 
       if (!user) {
         // User not registered, start registration process
-        if (message === 'Hi') {
+        if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
           await sendTextMessage(
             from,
             "Hi! Thank you for contacting Telepharma Botswana. Let's start the registration process."
@@ -296,17 +296,23 @@ app.post('/webhook', async (req, res) => {
             'Thank you for registering! Now, please select from the services below:',
             buttons
           );
+        } else {
+          // Fallback response for unrecognized inputs during registration
+          await sendTextMessage(
+            from,
+            "I'm sorry, I couldn't understand your input. Please provide the requested information or select the appropriate option."
+          );
         }
       } else {
         // User already registered, handle service selection
-        if (message === 'medication_delivery') {
+        if (message.toLowerCase().includes('medication') || message.toLowerCase().includes('medicine')) {
           const buttons = [
             { id: 'prescription_medicine', title: 'Prescription Medicine' },
             { id: 'over_the_counter_medicine', title: 'Over-the-Counter Medicine' },
           ];
           await sendButtonMessage(
             from,
-            'Great! Please select the type of medication you need:',
+            'Please select the type of medication you need:',
             buttons
           );
         } else if (message === 'prescription_medicine') {
@@ -339,6 +345,16 @@ app.post('/webhook', async (req, res) => {
             from,
             'Please provide the name or description of the over-the-counter medicine you need.'
           );
+        } else if (message.toLowerCase().includes('consultation')) {
+          const buttons = [
+            { id: 'pharmacy_consultation', title: 'Pharmacy Consultation' },
+            { id: 'doctor_consultation', title: 'Doctor Consultation' },
+          ];
+          await sendButtonMessage(
+            from,
+            'Please select the type of consultation you need:',
+            buttons
+          );
         } else if (['pharmacy_consultation', 'doctor_consultation', 'general_enquiry'].includes(message)) {
           await sendTextMessage(
             from,
@@ -360,6 +376,12 @@ app.post('/webhook', async (req, res) => {
           await sendTextMessage(
             from,
             'A pharmacist will be available to assist you shortly. Please provide any additional details or instructions you may have.'
+          );
+        } else {
+          // Fallback response for unrecognized inputs from registered users
+          await sendTextMessage(
+            from,
+            "I'm sorry, I couldn't understand your request. Please select a valid option or provide more information."
           );
         }
       }
